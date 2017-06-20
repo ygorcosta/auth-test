@@ -44,7 +44,10 @@
 		var form = document.getElementById('signup');
 		form.addEventListener('submit', function(e) {
 			e.preventDefault();
-			var user = {email: e.target.email.value, passoword: e.target.password.value};
+			var user = {
+				email: e.target.email.value, 
+				passoword: e.target.password.value
+			};
 			createUser(user);
 		});
 
