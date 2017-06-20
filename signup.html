@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Auth test</title>
+	<style type="text/css">
+		html, body {
+			margin: 0;
+			padding: 0;
+		}
+		.half {
+			width: calc(50% - 48px);
+			display: inline-block;
+			margin: 0;
+			padding: 24px;
+			float: left;
+		}
+	</style>
+
+	<script src="http://cdn.wedeploy.com/api/latest/wedeploy.js"></script>
+</head>
+<body>
+	<div class="half">
+		<h1>Users</h1>
+		<table id="users">
+			<thead>
+				<tr>
+					<td>id</td>
+					<td>email</td>
+				</tr>
+			</thead>
+			<tbody id="userList"></tbody>
+		</table>
+	</div>
+	<div class="half">
+		<h1>New User</h1>
+		<form id="signup" method="POST">
+			<input type="email" name="email" />
+			<input type="password" name="password" />
+			<button type="submit">submit</button>
+		</form>
+	</div>
+
+	<script type="text/javascript">
+		var form = document.getElementById('signup');
+		form.addEventListener('submit', function(e) {
+			e.preventDefault();
+			var user = {email: e.target.email.value, passoword: e.target.password.value};
+			createUser(user);
+		});
+
+		function createUser(userObject) {
+			WeDeploy
+				.url('http://auth-hiro.wedeploy.xyz/')
+				.path('user/create')
+				.withCredentials(false)
+				.post({
+					email: userObject.email,
+					password: userObject.password
+				})
+				.then(function(user) {
+					// Successfully created.
+					console.log(user);
+				})
+				.catch(function(err) {
+					console.log(err);
+					// Not created.
+				});
+		}
+	</script>
+
+</body>
+</html>
